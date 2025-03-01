@@ -37,3 +37,6 @@ class EmployeeRepository:
             self.db.delete(db_employee)
             self.db.commit()
         return db_employee
+    
+    def get_employee_by_email(self, email: str):
+        return self.db.query(Employee).filter(Employee.email == email).first()
