@@ -1,22 +1,16 @@
 from fastapi import FastAPI, Depends, HTTPException
 from services.employee import EmployeeService
 from repositories.employee import EmployeeRepository
-from core.database import SessionLocal
+from core.database import get_db
 from schemas.employee import EmployeeCreate, Employee
-from typing import List
+from auth.jwt import router
+
 
 app = FastAPI()
-
-# Dependency to get database session
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+app.include_router(router)
 
 class EmployeeController:
-    def __init__(self, db):
+    def __init__(self, db = Depends(get_db)):
         self.employee_service = EmployeeService(EmployeeRepository(db))
 
     def create_employee(self, employee: EmployeeCreate):
