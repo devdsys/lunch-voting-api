@@ -1,20 +1,25 @@
 from models.employee import Employee
 from schemas.employee import EmployeeCreate
+from core.database import get_db, SessionLocal
+from fastapi import Depends
+
+
 
 class EmployeeRepository:
-    def __init__(self, db):
+    def __init__(self, db: SessionLocal):
         self.db = db
 
     def create_employee(self, employee: EmployeeCreate):
         try:
-            db_employee = Employee(name=employee.name, email=employee.email, password=employee.password)
+            db_employee = Employee(name=employee.name, email=employee.email)
+            db_employee.set_password(employee.password)  
             self.db.add(db_employee)
             self.db.commit()
             self.db.refresh(db_employee)
             return db_employee
         except Exception as e:
             self.db.rollback() 
-            raise e  
+            raise e 
 
     def get_employee(self, employee_id: int):
         """Get an employee by ID from the database"""
@@ -38,5 +43,5 @@ class EmployeeRepository:
             self.db.commit()
         return db_employee
     
-    def get_employee_by_email(self, email: str):
+    def get_employee_by_email(self, email: str, ):
         return self.db.query(Employee).filter(Employee.email == email).first()

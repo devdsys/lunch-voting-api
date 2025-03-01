@@ -1,4 +1,3 @@
-# models/employee.py
 from sqlalchemy import Column, Integer, String, Date
 from datetime import date
 from core.database import Base
@@ -11,19 +10,21 @@ class Employee(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String)
     email = Column(String, unique=True)
-    password = Column(String)
+    password = Column(String)  # Stores hashed password as a string
     created_at = Column(Date, default=date.today)
 
-    def __init__(self, name, email, password):
+    def __init__(self, name, email):
         self.name = name
         self.email = email
-        self.password = self._hash_password(password)
 
-    def _hash_password(self, password):
+    def set_password(self, password: str):
+        """Hash the password and store it as a string"""
         salt = bcrypt.gensalt()
-        return bcrypt.hashpw(password.encode('utf-8'), salt)
+        hashed_pw = bcrypt.hashpw(password.encode('utf-8'), salt)
+        self.password = hashed_pw.decode('utf-8') 
 
-    def check_password(self, password):
+    def check_password(self, password: str):
+        """Verify if the provided password matches the stored hashed password"""
         return bcrypt.checkpw(password.encode('utf-8'), self.password.encode('utf-8'))
 
     def __repr__(self):
