@@ -6,6 +6,7 @@ from jwt import encode, decode, PyJWTError
 from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 from auth.schemas import TokenData
+from core.config import AUTH_PREFIX
 
 
 load_dotenv()
@@ -13,11 +14,11 @@ load_dotenv()
 JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 JWT_ALGORITHM = os.getenv("JWT_ALGORITHM")
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl=f"{AUTH_PREFIX}login")
 
 def create_access_token(data: dict, expires_delta = None):
     to_encode = data.copy()
-    expire = datetime.utcnow() + (expires_delta or timedelta(minutes=15))
+    expire = datetime.utcnow() + (expires_delta or timedelta(days=1))
     to_encode.update({"exp": expire})
     return encode(to_encode, JWT_SECRET_KEY, algorithm=JWT_ALGORITHM)
 
