@@ -1,6 +1,5 @@
-from pydantic import BaseModel
-from email_validator import validate_email, EmailNotValidError
-from app.validation.password_validation import PasswordValidator
+from pydantic import BaseModel, field_validator
+from app.validation.registration_validators import CommonValidators
 from datetime import datetime
 
 class RestaurantBase(BaseModel):
@@ -12,21 +11,13 @@ class RestaurantCreate(RestaurantBase):
     email: str
     password: str
 
-    @staticmethod
-    def validate_email(email: str):
-        try:
-            validate_email(email)
-        except EmailNotValidError as e:
-            raise ValueError(str(e))
-        return email
+    @field_validator("email")
+    def validate_email(cls, v):
+        return CommonValidators.validate_email(v)
 
-    @staticmethod
-    def validate_password(password: str):
-        password_validator = PasswordValidator(password)
-        if not password_validator.is_valid():
-            error_message = password_validator.get_error_message()
-            raise ValueError(error_message)
-        return password
+    @field_validator("password")
+    def validate_password(cls, v):
+        return CommonValidators.validate_password(v)
 
 class RestaurantUpdate(BaseModel):
     name: str

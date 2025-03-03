@@ -9,7 +9,7 @@ class EmployeeRepository:
 
     def create_employee(self, employee: EmployeeCreate):
         try:
-            db_employee = Employee(name=employee.name, email=employee.email)
+            db_employee = Employee(name=employee.name, surname=employee.surname, email=employee.email)
             db_employee.set_password(employee.password)  
             self.db.add(db_employee)
             self.db.commit()

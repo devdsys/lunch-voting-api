@@ -1,6 +1,7 @@
 from app.models.restaurant import Restaurant
 from app.core.database import SessionLocal
 from app.schemas.restaurant import RestaurantCreate, RestaurantUpdate
+from app.models import Restaurant
 
 class RestaurantRepository:
     def __init__(self, db: SessionLocal):
@@ -41,3 +42,6 @@ class RestaurantRepository:
 
     def get_all_restaurants(self):
         return self.db.query(Restaurant).all()
+    
+    def get_user_by_email(self, email: str, ):
+        return self.db.query(Restaurant).filter(Restaurant.email == email).first()
