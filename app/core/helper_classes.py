@@ -1,20 +1,23 @@
 import bcrypt
-from sqlalchemy import Column, Integer, String, Date
+from sqlalchemy import Column, Integer, String, DateTime
 from datetime import  datetime
 from sqlalchemy.ext.declarative import declared_attr
 
 
-class AuthentificationBase:
+class ModelFieldsBase:
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+class AuthentificationBase(ModelFieldsBase):
     """Base class for authentication models"""
     @declared_attr
     def __tablename__(cls):
         return cls.__name__.lower()
 
-    id = Column(Integer, primary_key=True)
     email = Column(String, unique=True)
-    name = Column(String)
     password = Column(String)
-    created_at = Column(Date, default=datetime.utcnow)
 
     def set_password(self, password: str):
         """Hash the password and store it as a string"""
