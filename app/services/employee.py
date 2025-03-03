@@ -1,5 +1,5 @@
-from repositories.employee import EmployeeRepository
-from schemas.employee import EmployeeCreate, EmployeeUpdate
+from app.repositories.employee import EmployeeRepository
+from app.schemas.employee import EmployeeCreate, EmployeeUpdate
 
 class EmployeeService:
     def __init__(self, employee_repository: EmployeeRepository):

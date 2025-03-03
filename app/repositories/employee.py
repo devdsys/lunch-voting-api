@@ -1,6 +1,6 @@
-from models.employee import Employee
-from schemas.employee import EmployeeCreate, EmployeeUpdate
-from core.database import SessionLocal
+from app.models.employee import Employee
+from app.schemas.employee import EmployeeCreate, EmployeeUpdate
+from app.core.database import SessionLocal
 
 
 class EmployeeRepository:

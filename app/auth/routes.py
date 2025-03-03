@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
-from core.database import get_db, SessionLocal
-from auth.schemas import Token, LoginRequest
-from auth.services import login
+from app.core.database import get_db, SessionLocal
+from app.auth.schemas import Token, LoginRequest
+from app.auth.services import login
 
 router = APIRouter()
 

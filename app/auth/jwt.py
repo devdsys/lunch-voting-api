@@ -4,7 +4,7 @@ from typing import Optional
 from dotenv import load_dotenv
 from jwt import encode
 from fastapi.security import OAuth2PasswordBearer
-from core.config import AUTH_PREFIX
+from app.core.config import AUTH_PREFIX
 
 
 load_dotenv()

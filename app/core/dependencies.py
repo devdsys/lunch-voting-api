@@ -1,8 +1,8 @@
 from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 from jwt import decode
-from auth.jwt import JWT_SECRET_KEY
-from auth.schemas import TokenData
+from app.auth.jwt import JWT_SECRET_KEY
+from app.auth.schemas import TokenData
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
 
@@ -16,5 +16,10 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
 
 def get_current_employee(current_user: TokenData = Depends(get_current_user)):
     if current_user.role != "employee":
+        raise HTTPException(status_code=403, detail="Forbidden")
+    return current_user
+
+def get_current_restaurant(current_user: TokenData = Depends(get_current_user)):
+    if current_user.role != "restaurant":
         raise HTTPException(status_code=403, detail="Forbidden")
     return current_user

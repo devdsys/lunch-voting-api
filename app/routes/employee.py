@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException
-from services.employee import EmployeeService
-from repositories.employee import EmployeeRepository
-from core.database import get_db
-from schemas.employee import EmployeeCreate, Employee, EmployeeUpdate
-from core.dependencies import get_current_employee
-from auth.schemas import TokenData
+from app.services.employee import EmployeeService
+from app.repositories.employee import EmployeeRepository
+from app.core.database import get_db
+from app.schemas.employee import EmployeeCreate, Employee, EmployeeUpdate
+from app.core.dependencies import get_current_employee
+from app.auth.schemas import TokenData
 
 router = APIRouter()
 

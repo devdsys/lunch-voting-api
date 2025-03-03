@@ -1,6 +1,6 @@
 from datetime import datetime
 from pydantic import BaseModel, field_validator
-from validation.password_validation import PasswordValidator
+from app.validation.password_validation import PasswordValidator
 from email_validator import validate_email, EmailNotValidError
 
 
