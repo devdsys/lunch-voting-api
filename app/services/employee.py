@@ -23,4 +23,4 @@ class EmployeeService:
         return self.employee_repository.delete_employee(employee_id)
     
     def get_employee_by_email(self, email: str):
-        return self.employee_repository.get_employee_by_email(email)
+        return self.employee_repository.get_user_by_email(email)

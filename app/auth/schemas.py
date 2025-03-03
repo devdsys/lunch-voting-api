@@ -1,10 +1,18 @@
 from pydantic import BaseModel
 from typing import Optional
 from enum import Enum
+from repositories.employee import EmployeeRepository
+
 
 class Role(str, Enum):
     employee = "employee"
-    restaurant = "restaurant"
+
+    @property
+    def repository(self):
+        repositories = {
+            "employee": EmployeeRepository,
+        }
+        return repositories[self.value]
 
 class Token(BaseModel):
     access_token: str

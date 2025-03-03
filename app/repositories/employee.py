@@ -43,5 +43,5 @@ class EmployeeRepository:
             self.db.commit()
         return db_employee
     
-    def get_employee_by_email(self, email: str, ):
+    def get_user_by_email(self, email: str, ):
         return self.db.query(Employee).filter(Employee.email == email).first()
