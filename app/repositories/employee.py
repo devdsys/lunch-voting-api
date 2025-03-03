@@ -1,5 +1,5 @@
 from models.employee import Employee
-from schemas.employee import EmployeeCreate
+from schemas.employee import EmployeeCreate, EmployeeUpdate
 from core.database import SessionLocal
 
 
@@ -23,15 +23,15 @@ class EmployeeRepository:
         """Get an employee by ID from the database"""
         return self.db.query(Employee).filter(Employee.id == employee_id).first()
 
-    def update_employee(self, employee_id: int, employee: EmployeeCreate):
+    def update_employee(self, employee_id: int, employee: EmployeeUpdate):
         """Update an existing employee in the database"""
         db_employee = self.get_employee(employee_id)
         if db_employee:
             db_employee.name = employee.name
-            db_employee.email = employee.email
             self.db.commit()
             self.db.refresh(db_employee)
-        return db_employee
+            return db_employee  # Return the updated Employee object
+        return None
 
     def delete_employee(self, employee_id: int):
         """Delete an employee from the database"""
@@ -39,7 +39,8 @@ class EmployeeRepository:
         if db_employee:
             self.db.delete(db_employee)
             self.db.commit()
-        return db_employee
+            return {"message": "Employee deleted successfully"}
+        return None
     
     def get_user_by_email(self, email: str, ):
         return self.db.query(Employee).filter(Employee.email == email).first()

@@ -18,7 +18,6 @@ class EmployeeBase(BaseModel):
         return v
 
 class EmployeeCreate(EmployeeBase):
-    """Employee creation model"""
     password: str
 
     @field_validator("password")
@@ -28,9 +27,14 @@ class EmployeeCreate(EmployeeBase):
             error_message = password_validator.get_error_message()
             raise ValueError(error_message)
         return v
+    
+class EmployeeUpdate(BaseModel):
+    name: str
+
+    class Config:
+        orm_mode = True
 
 class Employee(EmployeeBase):
-    """Employee model with ID"""
     id: int
     created_at: datetime
 
