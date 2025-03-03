@@ -2,9 +2,6 @@ import bcrypt
 from sqlalchemy import Column, Integer, String, Date
 from datetime import  datetime
 from sqlalchemy.ext.declarative import declared_attr
-from pydantic import BaseModel
-from email_validator import validate_email, EmailNotValidError
-from app.validation.password_validation import PasswordValidator
 
 
 class AuthentificationBase:

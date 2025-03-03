@@ -1,6 +1,5 @@
 from datetime import datetime
 from pydantic import BaseModel, field_validator
-from app.validation.password_validation import PasswordValidator
 from app.validation.registration_validators import CommonValidators
 
 
