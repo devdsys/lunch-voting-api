@@ -6,6 +6,7 @@ from app.validation.registration_validators import CommonValidators
 class EmployeeBase(BaseModel):
     """Base employee model"""
     name: str
+    surname: str
     email: str
 
     @field_validator("email")
