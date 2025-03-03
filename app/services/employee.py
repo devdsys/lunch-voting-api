@@ -1,4 +1,3 @@
-from models.employee import Employee
 from repositories.employee import EmployeeRepository
 from schemas.employee import EmployeeCreate
 

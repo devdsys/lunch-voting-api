@@ -1,10 +1,8 @@
 from datetime import timedelta
 from fastapi import Depends, HTTPException
 from core.database import get_db, SessionLocal
-from repositories.employee import EmployeeRepository
 from auth.jwt import create_access_token, create_refresh_token
 from auth.schemas import LoginRequest
-from repositories.employee import EmployeeRepository
 
 
 def login(login_request: LoginRequest, db: SessionLocal = Depends(get_db)):

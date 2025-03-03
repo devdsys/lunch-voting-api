@@ -1,8 +1,6 @@
 from models.employee import Employee
 from schemas.employee import EmployeeCreate
-from core.database import get_db, SessionLocal
-from fastapi import Depends
-
+from core.database import SessionLocal
 
 
 class EmployeeRepository:
