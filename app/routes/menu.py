@@ -46,17 +46,17 @@ def get_controller(db=Depends(get_db)):
     return MenuController(db)
 
 @router.post("/", response_model=MenuCreate)
-def create_menu(menu: MenuCreate, controller: MenuController = Depends(get_controller)):
+def create_menu(menu: MenuCreate, controller: MenuController = Depends(get_controller), current_user: dict = Depends(get_current_restaurant)):
     return controller.create_menu(menu.restaurant_id, menu)
 
 @router.get("/{restaurant_id}/{day}", response_model=MenuCreate)
-def get_menu(restaurant_id: int, day: DayOfWeek, controller: MenuController = Depends(get_controller)):
-    return controller.get_menu(restaurant_id, day)
+def get_menu(restaurant_id: int, day: DayOfWeek, controller: MenuController = Depends(get_controller), current_user: dict = Depends(get_authorized_user)):
+    return controller.get_menu(restaurant_id, day, current_user)
 
 @router.put("/{restaurant_id}/{day}", response_model=MenuCreate)
-def update_menu(restaurant_id: int, day: DayOfWeek, menu: MenuUpdate, controller: MenuController = Depends(get_controller)):
+def update_menu(restaurant_id: int, day: DayOfWeek, menu: MenuUpdate, controller: MenuController = Depends(get_controller), current_user: dict = Depends(get_current_restaurant)):
     return controller.update_menu(restaurant_id, day, menu)
 
 @router.delete("/{restaurant_id}/{day}")
-def delete_menu(restaurant_id: int, day: DayOfWeek, controller: MenuController = Depends(get_controller)):
+def delete_menu(restaurant_id: int, day: DayOfWeek, controller: MenuController = Depends(get_controller), current_user: dict = Depends(get_current_restaurant)):
     return controller.delete_menu(restaurant_id, day)
