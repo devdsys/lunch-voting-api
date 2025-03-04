@@ -40,7 +40,7 @@ def get_controller(db=Depends(get_db)):
     return RestaurantController(db)
 
 @router.post("/", response_model=Restaurant)
-def create_restaurant(restaurant: RestaurantCreate, controller: RestaurantController = Depends(get_controller), current_user: dict = Depends(get_current_restaurant)):
+def create_restaurant(restaurant: RestaurantCreate, controller: RestaurantController = Depends(get_controller)):
     return controller.create_restaurant(restaurant)
 
 @router.get("/{restaurant_id}", response_model=Restaurant)
