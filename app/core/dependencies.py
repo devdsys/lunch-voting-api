@@ -23,3 +23,9 @@ def get_current_restaurant(current_user: TokenData = Depends(get_current_user)):
     if current_user.role != "restaurant":
         raise HTTPException(status_code=403, detail="Forbidden")
     return current_user
+
+def get_authorized_user(current_user: TokenData = Depends(get_current_user)):
+    if current_user.role == "restaurant" or current_user.role == "employee":
+        return current_user
+    raise HTTPException(status_code=403, detail="Forbidden")
+    

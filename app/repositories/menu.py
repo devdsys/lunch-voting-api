@@ -9,7 +9,7 @@ class MenuRepository:
 
     def create_menu(self, restaurant_id: int, day: DayOfWeek, menu: MenuCreate):
         try:
-            db_menu = Menu(description=menu.description, restaurant_id=restaurant_id, day=day)
+            db_menu = Menu(name=menu.name, description=menu.description, restaurant_id=restaurant_id, day=day)
             self.db.add(db_menu)
             self.db.commit()
             self.db.refresh(db_menu)

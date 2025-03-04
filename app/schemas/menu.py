@@ -5,6 +5,7 @@ class MenuBase(BaseModel):
     name: str
     description: str
     day: DayOfWeek
+    restaurant_id: int
 
 class MenuCreate(MenuBase):
     pass
@@ -14,7 +15,6 @@ class MenuUpdate(MenuBase):
 
 class Menu(MenuBase):
     id: int
-    restaurant_id: int
     
     class Config:
         orm_mode = True
