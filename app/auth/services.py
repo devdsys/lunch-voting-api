@@ -25,7 +25,8 @@ def login(login_request: LoginRequest, db: SessionLocal = Depends(get_db)):
     # Create the JWT payload
     payload = {
         "email": user.email,
-        "role": login_request.role
+        "role": login_request.role,
+        "id": user.id
     }
     # Create the access token
     access_token = create_access_token(

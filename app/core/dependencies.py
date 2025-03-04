@@ -9,7 +9,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
 def get_current_user(token: str = Depends(oauth2_scheme)):
     try:
         payload = decode(token, JWT_SECRET_KEY, algorithms=["HS256"])
-        token_data = TokenData(email=payload.get("email"), role=payload.get("role"))
+        token_data = TokenData(email=payload.get("email"), role=payload.get("role"), id=payload.get("id"))
         return token_data
     except Exception as e:
         raise HTTPException(status_code=401, detail="Invalid token")
