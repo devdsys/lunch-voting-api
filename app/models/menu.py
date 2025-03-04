@@ -1,5 +1,5 @@
 from sqlalchemy import Column, ForeignKey, UniqueConstraint, Integer, Enum, String
-from sqlalchemy.orm import relationship, validates
+from sqlalchemy.orm import relationship
 from app.core.database import Base
 from app.core.helper_classes import ModelFieldsBase
 from enum import Enum as PyEnum
@@ -16,6 +16,7 @@ class DayOfWeek(PyEnum):
 class Menu(ModelFieldsBase, Base):
     """Menu model"""
     __tablename__ = "menu"
+    name = Column(String)
     description = Column(String)
     restaurant_id = Column(Integer, ForeignKey("restaurant.id"))
     day = Column(Enum(DayOfWeek, name="day_of_week_enum", create_type=False), nullable=False) 

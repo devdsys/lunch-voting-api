@@ -6,7 +6,6 @@ from sqlalchemy.ext.declarative import declared_attr
 
 class ModelFieldsBase:
     id = Column(Integer, primary_key=True)
-    name = Column(String)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
@@ -15,7 +14,8 @@ class AuthentificationBase(ModelFieldsBase):
     @declared_attr
     def __tablename__(cls):
         return cls.__name__.lower()
-
+    
+    name = Column(String)
     email = Column(String, unique=True)
     password = Column(String)
 
