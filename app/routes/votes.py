@@ -4,6 +4,7 @@ from app.repositories.votes import VotesRepository
 from app.core.database import get_db
 from app.schemas.votes import VoteCreate, Vote
 from app.core.dependencies import get_current_employee
+from datetime import date
 
 router = APIRouter()
 
@@ -25,6 +26,10 @@ class VotesController:
 
     def get_vote(self, menu_id: int, current_user):
         return self.get_vote_or_404(menu_id, current_user.id)
+    
+    def get_day_statistic(self):
+        today = date.today()
+        return self.votes_service.get_day_statistic(today)
 
 def get_controller(db=Depends(get_db)):
     return VotesController(db)
@@ -32,6 +37,10 @@ def get_controller(db=Depends(get_db)):
 @router.post("/", response_model=VoteCreate)
 def create_vote(vote: VoteCreate, controller: VotesController = Depends(get_controller), current_user: dict = Depends(get_current_employee)):
     return controller.create_vote(vote.menu_id, vote, current_user)
+
+@router.get("/day_statistic")
+def get_day_statistic(controller: VotesController = Depends(get_controller), current_user: dict = Depends(get_current_employee)):
+    return controller.get_day_statistic()
 
 @router.get("/{menu_id}", response_model=Vote)
 def get_vote(menu_id: int, controller: VotesController = Depends(get_controller), current_user: dict = Depends(get_current_employee)):

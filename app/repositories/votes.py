@@ -1,4 +1,5 @@
-from fastapi import Depends
+from datetime import date
+from sqlalchemy import func
 from app.models.votes import Votes
 from app.core.database import SessionLocal
 from app.schemas.votes import VoteCreate
@@ -20,3 +21,11 @@ class VotesRepository:
 
     def get_vote(self, menu_id: int, employee_id: int):
         return self.db.query(Votes).filter(Votes.menu_id == menu_id, Votes.employee_id == employee_id).first()
+
+    def get_day_statistic(self, day: date):
+        day_statistic = self.db.query(Votes.menu_id, func.avg(Votes.stars).label("avg_stars")) \
+            .filter(Votes.date == day) \
+            .group_by(Votes.menu_id) \
+            .all()
+        
+        return [{"menu_id": menu_id, "avg_stars": avg_stars} for menu_id, avg_stars in day_statistic]
