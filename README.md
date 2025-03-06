@@ -50,3 +50,8 @@ http://127.0.0.1:8000/docs
 This will open the interactive API documentation (Swagger UI) where you can check the endpoints.
 
 
+### 7. Run Tests  
+Execute the following command to run the tests:  
+```sh
+python -m pytest tests
+```  
